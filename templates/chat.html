@@ -20,6 +20,13 @@
     <p><strong>{{message.sender}}: </strong>{{message.body}}</p>
     {% endfor %}
 
+<!-- the below reloads the page every 5 seconds-->
+<script>
+    setTimeout(function() {
+        location.reload();
+    }, 5000);
+</script>
+
 </body>
 
 </html>

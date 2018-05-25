@@ -6,7 +6,9 @@ app = Flask(__name__)
 #stores the messages and it has to be in global scope to keep the messages
 
 
-messages = []
+messages = [] # this list is made up of different diccionaries with sender and body as made up at the bottom of this
+
+
 banned_words = ["feck", "crap", "duck"]
 
 
@@ -33,7 +35,14 @@ def do_login():
     
 @app.route("/<username>")
 def get_userpage(username):
-    return render_template("chat.html", logged_as=username, all_the_messages=messages)
+    filtered_message = []
+  # this filters out the messages that are not for the usename in question  
+    for i in messages:
+        if i[body][0] != "@":
+            filtered_message.append(i)
+        elif i[body].split()[0][1:] == username:
+            filtered_message.append(i)
+    return render_template("chat.html", logged_as=username, all_the_messages=filtered_messages)
 
 
 @app.route("/<username>/new", methods=["POST"])

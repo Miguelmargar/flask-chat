@@ -39,7 +39,7 @@ def get_userpage(username):
   # this filters out the messages that are not for the usename in question  
     for i in messages:
         if i["body"][0] != "@":
-            filtered_message.append(i)
+            messages.append(i)
         elif i["body"].split()[0][1:] == username:
             filtered_message.append(i)
     return render_template("chat.html", logged_as=username, all_the_messages=filtered_message)

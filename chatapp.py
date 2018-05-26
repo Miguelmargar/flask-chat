@@ -38,11 +38,11 @@ def get_userpage(username):
     filtered_message = []
   # this filters out the messages that are not for the usename in question  
     for i in messages:
-        if i[body][0] != "@":
+        if i["body"][0] != "@":
             filtered_message.append(i)
-        elif i[body].split()[0][1:] == username:
+        elif i["body"].split()[0][1:] == username:
             filtered_message.append(i)
-    return render_template("chat.html", logged_as=username, all_the_messages=filtered_messages)
+    return render_template("chat.html", logged_as=username, all_the_messages=filtered_message)
 
 
 @app.route("/<username>/new", methods=["POST"])

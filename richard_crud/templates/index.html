@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="static/css/style.css" type="text/css" />
+
+</head>
+<body>
+    <h1>{{ msg }}</h1>
+    
+    <h2>Shopping List</h2>
+    
+    <ul>
+        {% for task in tasks %}
+            <form name="toggle_task_form" action="/toggle" method="POST">
+                <input type="hidden" name="taskid" value="{{task._id}}"/>
+                {% if task.done %}
+                <li><strike><a href="/edit/{{task._id}}">{{ task.name }}</a></strike> <input type="submit" value="Toggle"/></li>
+                {% else %}
+                <li><a href="/edit/{{task._id}}">{{ task.name }}</a> <input type="submit" value="Toggle"/></li>
+                {% endif %}
+            </form>
+        {% endfor %}
+    </ul>
+    
+    <hr>
+    
+    <form method="POST" action="/new_task">
+        <input type="text" name="task_to_do"/>
+        <input type="submit" value="Add Task"/>
+    </form>
+</body>
+</html>

@@ -31,18 +31,24 @@ def do_login():
     username = request.args.get("username")
     #return username   -- this line will check in the browser if it is correct as we'll be able to see the url 
     return redirect(username)   
+ 
+#the function below is made up of variable but these were made of if statements and then tidied up with variables    
+def can_see_message(message, username):
+    for_everyone = not message['body'].startswith('@')
+    for_this_user = message['body'].startswith('@' + username)
+    user_is_sender = message['sender'] == username    
     
+    return for_everyone or for_this_user or user_is_sender
     
 @app.route("/<username>")
 def get_userpage(username):
-    filtered_message = []
   # this filters out the messages that are not for the usename in question  
-    for i in messages:
-        if i["body"][0] != "@":
-            messages.append(i)
-        elif i["body"].split()[0][1:] == username:
-            filtered_message.append(i)
-    return render_template("chat.html", logged_as=username, all_the_messages=filtered_message)
+    filtered_messages = []
+    for message in messages:
+        if can_see_message(message, username):
+            filtered_messages.append(message)
+            
+    return render_template("chat.html", logged_as=username, all_the_messages=filtered_messages)
 
 
 @app.route("/<username>/new", methods=["POST"])
